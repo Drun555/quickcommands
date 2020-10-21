@@ -145,10 +145,31 @@ const updateAll = (lists, filterText) =>
   Promise.all(lists.map(l => l.update(filterText)))
     .then(() => reRender(lists))
 
+const removePopupOnFocusChange = currentId => focusedId => {
+  if (currentId !== focusedId) {
+    browser.windows.onFocusChanged.removeListener(removePopupOnFocusChange)
+    browser.windows.remove(currentId)
+  }
+}
+
+const isDevInstall = async () => {
+  const extensionInfo = await browser.management.getSelf()
+  return extensionInfo.installType === 'development'
+}
+
+const addPopupRemovalListener = async () => {
+  const devInstall = await isDevInstall()
+  if (!devInstall) {
+    const win = await browser.windows.getCurrent()
+    browser.windows.onFocusChanged.addListener(removePopupOnFocusChange(win.id))
+  }
+}
+
 const startUp = () => {
   const url = browser.extension.getURL('page/popup.html')
-  updateTheme().then(() => {
-    return browser.history.deleteUrl({ url }).then(() => {
+  return updateTheme()
+    .then(() => browser.history.deleteUrl({ url }))
+    .then(() => {
       console.debug('Extension page removed from history')
       const lists = [
         searchList,
@@ -158,22 +179,11 @@ const startUp = () => {
         bookmarksList,
       ]
       setupInputFilter(lists)
-      return updateAll(lists, null).then(() => {
-        return browser.windows.getCurrent((win) => {
-          browser.windows.onFocusChanged.addListener(removePopupOnFocusChange(win.id))
-        })
-      })
+      return updateAll(lists, null)
     })
-  })
+    .then(addPopupRemovalListener)
 }
 document.addEventListener('DOMContentLoaded', startUp)
-
-const removePopupOnFocusChange = currentId => focusedId => {
-  if (currentId !== focusedId) {
-    browser.windows.onFocusChanged.removeListener(removePopupOnFocusChange)
-    browser.windows.remove(currentId)
-  }
-}
 
 // Save window size when closed
 // Uses runtime.sendMessage to avoid race conditions with async
