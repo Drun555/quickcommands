@@ -11,7 +11,7 @@ const updateTabs = (filterText) => {
           continue
         }
       }
-      currentTabs.push(new Tab(tab.id, tab.title, closePopup))
+      currentTabs.push(new Tab(tab.id, tab.title, closePopup, tab.favIconUrl))
     }
     const limit = await getLimit()
     return currentTabs.slice(0, limit)

@@ -37,10 +37,12 @@ form {
 #search {
     padding-top: 2%;
     padding-bottom: 2%;
-    width: 90%;
+    width: 100%;
     font-size:250%;
-    margin-left: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
     height: 65px;
+    outline: none;
 }
 
 ul {
@@ -61,9 +63,18 @@ li {
     cursor: pointer;
 }
 
+li:hover {
+	color: #130e0e;
+	background-color: #C4D7EA;
+}
+
 li.separator {
     padding: 0.25em 0 0.25em 0;
     font-size: 95%;
+    border-top: 1px #0000001c solid;
+    padding-top: 0.6em;
+    margin-bottom: 0.6em;
+    margin-top: 0.6em;
 }
 
 li > span:first-child {
@@ -111,4 +122,12 @@ li.selected, .selected .tab-content {
 
 .tab-url, li.separator {
     color: var(--accent-text-color);
+}
+
+.tab-icon {
+	width: auto;
+	height: 1em;
+	float: left;
+	padding-right: 0.6em;
+	padding-left: 0.6em;
 }

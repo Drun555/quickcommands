@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Quick Commands",
+  "name": "Quick Commands Refreshed",
   "version": "1.4.0",
   "description": "An add-on that tries to mimic Vivaldi's Quick commands window. Open with Alt-Shift-R",
   "icons": {
@@ -31,7 +31,10 @@
   },
   "commands": {
     "quick-commands": {
-      "suggested_key": { "default": "Alt+Shift+R" },
+      "suggested_key": { 
+        "default": "Alt+Shift+R",
+        "mac": "Shift+Command+E"
+      },
       "description": "Open the quick-commands window"
     }
   }

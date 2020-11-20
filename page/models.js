@@ -81,7 +81,8 @@ class TabList {
 }
 
 class Tab {
-  constructor (tabID, title, onOpen) {
+  constructor (tabID, title, onOpen, favIconUrl) {
+    this.iconURL = favIconUrl;
     this.tabID = tabID
     this.title = title
     this.selected = false
@@ -94,9 +95,16 @@ class Tab {
     tabElement.addEventListener('click', () => {
       this.open()
     })
+
     const title = document.createElement('span')
     title.textContent = this.title
-    title.classList.add('pull-left')
+    // title.classList.add('pull-left')
+
+    const icon = document.createElement('img')
+    icon.setAttribute('src', this.iconURL)
+    icon.classList.add('tab-icon')
+    
+    tabElement.appendChild(icon)
     tabElement.appendChild(title)
     return tabElement
   }

@@ -160,7 +160,7 @@ const startUp = () => {
       setupInputFilter(lists)
       return updateAll(lists, null).then(() => {
         return browser.windows.getCurrent((win) => {
-          browser.windows.onFocusChanged.addListener(removePopupOnFocusChange(win.id))
+          // browser.windows.onFocusChanged.addListener(removePopupOnFocusChange(win.id))
         })
       })
     })
