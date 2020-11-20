@@ -151,8 +151,8 @@ const startUp = () => {
     return browser.history.deleteUrl({ url }).then(() => {
       console.debug('Extension page removed from history')
       const lists = [
-        searchList,
         tabsList,
+        searchList,
         commandList,
         historyList,
         bookmarksList,
